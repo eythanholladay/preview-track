@@ -3,8 +3,7 @@ const fs = require("fs-extra")
 const path = require("path")
 
 const vtt = async (config) => {
-  const {tile, width, height, interval, name} = config
-  const frames = Math.floor(config.input.duration / interval)
+  const {tile, width, height, interval, name, frames, padding} = config
   const fps = (tile) ? tile.cols * tile.rows : 1
   let output = "WEBVTT\n"
   let start, end, key, value, thumb = 0, sprite = 0, time = 0
@@ -20,7 +19,7 @@ const vtt = async (config) => {
       key = `xy${key}`
       value = `${(thumb % tile.cols) * width},${Math.floor(thumb / tile.cols) * height},${value}`
     }
-    output += `\n${start} --> ${end}\n${name}-${utils.fill(sprite)}.jpg#${key}=${value}\n`
+    output += `\n${start} --> ${end}\n${name}-${utils.fill(sprite, padding)}.jpg#${key}=${value}\n`
   }
   await fs.writeFile(path.join(config.output, `${name}.vtt`), output)
 }

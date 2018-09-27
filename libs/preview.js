@@ -15,7 +15,7 @@ const init = async (options = "") => {
     interval: options.interval || 10,
     width: options.width,
     height: options.height,
-    tile: (options.tile === true) ? "6x5" : options.tile
+    tile: (options.tile === true) ? "6x5" : options.tile,
   }
   if (isNaN(config.width))
     config.width = isNaN(config.height) ? 160 : Math.floor(config.height * (meta.width / meta.height))
@@ -30,6 +30,10 @@ const init = async (options = "") => {
       rows: parseInt(parts[1])
     }
   }
+
+  config.frames = Math.floor(meta.duration / config.interval)
+  config.padding = config.frames.toString().length
+
   await fs.ensureDir(config.output)
   return config
 }

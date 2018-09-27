@@ -22,7 +22,7 @@ const ffmpeg = async (config) => {
   ]
   if (config.tile)
     filters.push(`tile=${config.tile.cols}x${config.tile.rows}`)
-  const file = `${config.output}/${config.name}-%02d.jpg`
+  const file = `${config.output}/${config.name}-%0${config.padding}d.jpg`
   await cmd(`ffmpeg -i ${config.input.filename} -vf "${filters.join(",")}" -qscale:v 8 -vsync 0 -y ${file}`)
 }
 
