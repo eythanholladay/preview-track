@@ -2,7 +2,7 @@
   "name": "preview-track",
   "version": "0.1.0",
   "description": "Generates thumbnail preview track from video file",
-  "main": "preview-track.js",
+  "main": "./libs/preview.js",
   "bin": {
     "preview-track": "./preview-track.js"
   },
