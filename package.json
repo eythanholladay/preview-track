@@ -1,0 +1,22 @@
+{
+  "name": "preview-track",
+  "version": "0.1.0",
+  "description": "Generates thumbnail preview track from video file",
+  "main": "preview-track.js",
+  "bin": {
+    "preview-track": "./preview-track.js"
+  },
+  "dependencies": {
+    "commander": "^2.18.0",
+    "fs-extra": "^7.0.0"
+  },
+  "scripts": {
+    "build": "node ./pkg.js",
+    "test": "./test/test.sh"
+  },
+  "author": "Casey Occhialini <cocchial@akamai.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "pkg": "^4.3.4"
+  }
+}
