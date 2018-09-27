@@ -11,7 +11,7 @@
     "fs-extra": "^7.0.0"
   },
   "scripts": {
-    "build": "node ./pkg.js",
+    "build": "node ./build/pkg.js",
     "test": "./test/test.sh"
   },
   "author": "Casey Occhialini <cocchial@akamai.com>",
