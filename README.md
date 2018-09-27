@@ -7,7 +7,7 @@ NPM Scripts for testing and building:
 - `npm run test` - Tests the standalone executables (mac, win10 and linux)
 
 ### Usage
-preview-track [options] <file ...>
+`preview-track [options] <file ...>`
 - -V, --version             output the version number
 - -o, --output <path>       The output folder
 - -i, --interval <seconds>  The interval in seconds
