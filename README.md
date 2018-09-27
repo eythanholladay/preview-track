@@ -13,7 +13,7 @@ NPM Scripts for testing and building:
 - -w, --width <pixels>      Width of thumbnail image
 - -h, --height <pixels>     Height of thumbnail image
 - -t, --tile [dimensions]   The tile row and column count in 3x3 format
-- -h, --help                output usage information
+- --help                    output usage information
 
 ### Dependencies
 - https://zeit.co/pkg
