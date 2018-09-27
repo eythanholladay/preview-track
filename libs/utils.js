@@ -8,12 +8,10 @@ const fromSeconds = (time) => {
   time = parseInt(time / 60)
   strTime = fill(time % 60) + ":" + strTime
   time = parseInt(time / 60)
-  strTime = fill(time % 60) + ":" + strTime
-  time = parseInt(time / 60)
-  return strTime
+  return fill(time % 60) + ":" + strTime
 }
 
-const toSeconds = (timeCode, framerate = 30) => {
+const toSeconds = (timeCode) => {
   const pieces = timeCode.split(":")
   const parts = pieces[2].split(".")
   const ms = parseInt(parts[1]) / 1000
