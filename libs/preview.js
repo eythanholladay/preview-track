@@ -15,14 +15,19 @@ const init = async (options = "") => {
     interval: options.interval || 10,
     width: options.width,
     height: options.height,
-    quality: options.quality || 79,
+    quality: options.quality,
+    start: options.start || 0,
+    end: options.end || meta.duration,
+    fps: options.fps || 15,
     tile: (options.tile === true) ? "6x5" : options.tile,
   }
-  if (isNaN(config.width))
-    config.width = isNaN(config.height) ? 160 : Math.floor(config.height * (meta.width / meta.height))
+  if (options.poster !== true) {
+    if (isNaN(config.width))
+      config.width = isNaN(config.height) ? 160 : -1
 
-  if (isNaN(config.height))
-    config.height = Math.floor(config.width * (meta.height / meta.width))
+    if (isNaN(config.height))
+      config.height = -1
+  }
 
   if (config.tile) {
     const parts = config.tile.split("x")
@@ -39,11 +44,23 @@ const init = async (options = "") => {
   return config
 }
 
-const preview = async (options) => {
+const track = async (options) => {
   await ff.init()
   const config = await init(options)
   await ff.mpeg(config)
   await vtt(config)
 }
 
-module.exports = preview
+const poster = async (options) => {
+  await ff.init()
+  const config = await init(options)
+  await ff.poster(config)
+}
+
+const gif = async (options) => {
+  await ff.init()
+  const config = await init(options)
+  await ff.gif(config)
+}
+
+module.exports = {track, poster, gif}

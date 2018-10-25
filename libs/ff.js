@@ -1,4 +1,5 @@
 const cmd = require("./cmd")
+const utils = require("./utils")
 
 const ffinit = async () => {
   let results = await cmd(`ffmpeg -version`)
@@ -15,29 +16,55 @@ const ffprobe = async (file) => {
   return results
 }
 
-const map = (x, in_min, in_max, out_min, out_max) => {
-  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+const quality = (config) => {
+  let qscale = ""
+  if (config.quality) {
+    qscale = `-qscale:v ${Math.round(utils.map(config.quality, 0, 100, 31, 2))}`
+  }
+  return qscale
+}
+
+const scale = (config) => {
+  let scale = ""
+  if (config.width || config.height) {
+    scale = `scale=${config.width || -1}:${config.height || -1}`
+  }
+  return scale
+}
+
+const file = (config, extension) => {
+  return `${config.output}/${config.name}${extension}`
+}
+
+const vf = (filters) => {
+  filters = filters.filter(filter => !!filter)
+  return filters.length > 0 ? `-vf "${filters.join(",")}"` : ""
 }
 
 const ffmpeg = async (config) => {
-  let scale = `scale=${config.width}`
-  if (config.height) {
-    scale += `:${config.height}`
-  }
   const filters = [
     `select='isnan(prev_selected_t)+gte(t-prev_selected_t\,${config.interval})'`,
-    scale
+    scale(config),
+    (config.tile) ? `tile=${config.tile.cols}x${config.tile.rows}` : ""
   ]
-  if (config.tile) {
-    filters.push(`tile=${config.tile.cols}x${config.tile.rows}`)
-  }
-  const quality = Math.round(map(config.quality, 0, 100, 31, 2))
-  const file = `${config.output}/${config.name}-%0${config.padding}d.jpg`
-  await cmd(`ffmpeg -i ${config.input.filename} -vf "${filters.join(",")}" -qscale:v ${quality} -vsync 0 -huffman optimal -y ${file}`)
+  await cmd(`ffmpeg -i ${config.input.filename} ${vf(filters)} ${quality(config)} -vsync 0 -huffman optimal -y ${file(config, `-%0${config.padding}d.jpg`)}`)
+}
+
+const ffposter = async (config) => {
+  const filters = [
+    scale(config)
+  ]
+  await cmd(`ffmpeg -i ${config.input.filename} -ss ${config.start} ${vf(filters)} -vframes 1 ${quality(config)} -huffman optimal -y ${file(config, ".jpg")}`)
+}
+
+const ffgif = async (config) => {
+  await cmd(`ffmpeg -i ${config.input.filename} -ss ${config.start} -to ${config.end} -filter_complex "[0:v] fps=${config.fps},${scale(config)}:flags=lanczos,split [a][b];[a] palettegen=stats_mode=diff [p];[b][p] paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle" ${file(config, ".gif")}`)
 }
 
 module.exports = {
   init: ffinit,
   mpeg: ffmpeg,
-  probe: ffprobe
+  probe: ffprobe,
+  poster: ffposter,
+  gif: ffgif
 }

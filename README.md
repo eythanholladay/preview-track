@@ -10,9 +10,12 @@ Tool for generating thumbnail preview tracks.
 
 ### Scripts
 NPM Scripts for testing and building:
-- `npm run test` - Tests the preview-track script
 - `npm run build` - Creates standalone executables for Mac, Windows and Linux
-- `npm run test-bin` - Tests the standalone executables (mac, win10 and linux)
+- `npm run bin-mac` - Tests the macos standalone executable
+- `npm run tile` - Tests tiled preview track output
+- `npm run default` - Tests default preview track output
+- `npm run poster` - Tests poster output
+- `npm run gif` - Tests gif output
 
 ### Usage
 `preview-track [options] <file ...>`
@@ -22,6 +25,12 @@ NPM Scripts for testing and building:
 - -w, --width \<pixels>     Width of thumbnail image
 - -h, --height \<pixels>    Height of thumbnail image
 - -t, --tile [dimensions]   The tile row and column count in 3x3 format
+- -q, --quality [value]     The jpeg quality from 0 - 100
+- -p, --poster              Export a poster frame
+- -s, --start [time]        The start time in seconds or timecode
+- -g, --gif                 Export an animated gif
+- -e, --end [time]          The end time in seconds or timecode
+- -f, --fps [frames]        Frames per second for gif output
 - --help                    output usage information
 
 ### Examples
@@ -33,6 +42,13 @@ NPM Scripts for testing and building:
 
 - 6 x 5 tiled thumbnails at 2 second intervals
     - `preview-track test/test.mp4 -t -i 2 -o test/output/6x5`
+
+- Poster image of the 28th second of the video
+    - `preview-track test/test.mp4 -p -s 28 -q 90 -o test/output/`
+    - `preview-track test/test.mp4 -p -s 00:00:28 -q 90 -o test/output/`
+
+- Animated gif
+    - `preview-track test/test.mp4 -g -s 24 -e 32 -f 12 -w 540 -o test/output/`
 
 ### Dependencies
 - https://zeit.co/pkg

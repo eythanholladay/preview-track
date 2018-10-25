@@ -12,8 +12,11 @@
   },
   "scripts": {
     "build": "node ./build/pkg.js",
-    "test-bin": "./test/test.sh",
-    "test": "node ./preview-track.js test/test.mp4 -t 3x2 -o test/output/3x2 -q 75"
+    "bin-mac": "./test/test.sh",
+    "tile": "node ./preview-track.js test/test.mp4 -t 3x2 -o test/output/3x2 -q 75",
+    "default": "node ./preview-track.js test/test.mp4 -o test/output/",
+    "poster": "node ./preview-track.js test/test.mp4 -p -s 28 -q 90 -o test/output/",
+    "gif": "node ./preview-track.js test/test.mp4 -g -s 24 -e 32 -f 12 -w 540 -o test/output/"
   },
   "author": "Casey Occhialini <cocchial@akamai.com>",
   "license": "MIT",
