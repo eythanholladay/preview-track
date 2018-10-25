@@ -1,6 +1,13 @@
 # preview-track
 Tool for generating thumbnail preview tracks.
 
+### Install
+- Install node by downloading the latest version at [nodejs](http://nodejs.org)
+    - To see if you already have a version node installed, run `node -v`
+- `cd` to the local copy of the `preview-track` repository
+- run `npm install -g` to install dependencies and create global command line utility.
+    - or run `npm install` then `npm run build` to build standalone executable.
+
 ### Scripts
 NPM Scripts for testing and building:
 - `npm run build` - Creates standalone executables for Mac, Windows and Linux
