@@ -15,15 +15,25 @@ const ffprobe = async (file) => {
   return results
 }
 
+const map = (x, in_min, in_max, out_min, out_max) => {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+}
+
 const ffmpeg = async (config) => {
+  let scale = `scale=${config.width}`
+  if (config.height) {
+    scale += `:${config.height}`
+  }
   const filters = [
     `select='isnan(prev_selected_t)+gte(t-prev_selected_t\,${config.interval})'`,
-    `scale=${config.width}:${config.height}`
+    scale
   ]
-  if (config.tile)
+  if (config.tile) {
     filters.push(`tile=${config.tile.cols}x${config.tile.rows}`)
+  }
+  const quality = Math.round(map(config.quality, 0, 100, 31, 2))
   const file = `${config.output}/${config.name}-%0${config.padding}d.jpg`
-  await cmd(`ffmpeg -i ${config.input.filename} -vf "${filters.join(",")}" -qscale:v 8 -vsync 0 -y ${file}`)
+  await cmd(`ffmpeg -i ${config.input.filename} -vf "${filters.join(",")}" -qscale:v ${quality} -vsync 0 -huffman optimal -y ${file}`)
 }
 
 module.exports = {

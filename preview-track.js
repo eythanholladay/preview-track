@@ -15,6 +15,7 @@ const app = require("commander")
   .option("-w, --width <pixels>", "Width of thumbnail image", parseInt)
   .option("-h, --height <pixels>", "Height of thumbnail image", parseInt)
   .option("-t, --tile [dimensions]", "The tile row and column count in 3x3 format")
+  .option("-q, --quality [value]", "The jpeg quality from 0 - 100. Defaults to 79.", parseInt)
   .parse(process.argv)
 
 const files = app.args

@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "node ./build/pkg.js",
-    "test": "./test/test.sh"
+    "test-bin": "./test/test.sh",
+    "test": "node ./preview-track.js test/test.mp4 -t 3x2 -o test/output/3x2 -q 75"
   },
   "author": "Casey Occhialini <cocchial@akamai.com>",
   "license": "MIT",

@@ -15,6 +15,7 @@ const init = async (options = "") => {
     interval: options.interval || 10,
     width: options.width,
     height: options.height,
+    quality: options.quality || 79,
     tile: (options.tile === true) ? "6x5" : options.tile,
   }
   if (isNaN(config.width))

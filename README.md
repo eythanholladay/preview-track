@@ -10,8 +10,9 @@ Tool for generating thumbnail preview tracks.
 
 ### Scripts
 NPM Scripts for testing and building:
+- `npm run test` - Tests the preview-track script
 - `npm run build` - Creates standalone executables for Mac, Windows and Linux
-- `npm run test` - Tests the standalone executables (mac, win10 and linux)
+- `npm run test-bin` - Tests the standalone executables (mac, win10 and linux)
 
 ### Usage
 `preview-track [options] <file ...>`
