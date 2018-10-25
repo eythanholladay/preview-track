@@ -23,6 +23,16 @@ NPM Scripts for testing and building:
 - -t, --tile [dimensions]   The tile row and column count in 3x3 format
 - --help                    output usage information
 
+### Examples
+- Default preview track output, single thumbnails images, 10 second interval
+    - `preview-track test/test.mp4 -o test/output/`
+
+- 3 x 2 tiled thumbnails at 10 second intervals
+    - `preview-track test/test.mp4 -t 3x2 -o test/output/3x2`
+
+- 6 x 5 tiled thumbnails at 2 second intervals
+    - `preview-track test/test.mp4 -t -i 2 -o test/output/6x5`
+
 ### Dependencies
 - https://zeit.co/pkg
 - https://www.ffmpeg.org
